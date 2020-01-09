@@ -5,5 +5,9 @@ project.addAssets('assets/**', {
     name: '{dir}/{name}'
 });
 project.addSources('Sources');
+
+if (platform == 'debug-html5') {
+    project.addLibrary('hxnodejs');
+}
 project.addLibrary('zui');
 resolve(project);

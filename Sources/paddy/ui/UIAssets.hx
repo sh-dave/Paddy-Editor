@@ -68,9 +68,9 @@ class UIAssets {
 				ui.row([8/10, 1/10, 1/10]);
 				var input = ui.textInput(Id.handle(), "Terminal");
 				if(ui.button("Enter")){
-					var save = Krom.getFilesLocation() + "/temp.txt";
-					Krom.sysCommand('$input > $save');
-					var file = haxe.io.Bytes.ofData(Krom.loadBlob(save)).toString();
+					var save = Os.getFilesLocation() + "/temp.txt";
+					Os.sysCommand('$input > $save');
+					var file = haxe.io.Bytes.ofData(Os.loadBlob(save)).toString();
 					if(file!="") lines.push(file);
 				}
 				if(ui.button("Reset")) lines.resize(0);

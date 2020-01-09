@@ -138,6 +138,10 @@ class App {
 	}
 
 	public function render(frame:Array<Framebuffer>) {
+		if (ui == null) {
+			return;
+		}
+
 		if(grid==null)drawGrid();
 
 		var g = frame[0].g2;

@@ -14,7 +14,7 @@ class Export{
 	#end
 
 	public static function exportPaddy(path:String = "") {
-		Krom.sysCommand('mkdir $path/Assets');
+		Os.sysCommand('mkdir $path/Assets');
 		copyAssets('$path/Assets/');
 		adjustObjectSpritePath(path);
 		adjustAssetsPath(path);
@@ -25,7 +25,7 @@ class Export{
 		if(App.paddydata.window =="") App.paddydata.window = "window.json";
 		var newPath = path;
 		if(path!="") newPath = path+"/";
-		Krom.fileSaveBytes(newPath+"paddy.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.paddydata)).getData());
+		Os.fileSaveBytes(newPath+"paddy.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.paddydata)).getData());
 		exportWindow(path);
 		App.scene.assets = Assets.assets;
 		exportScene(path);
@@ -36,20 +36,20 @@ class Export{
 
 	public static function copyAssets(path:String) {
 		for(asset in Assets.assets){
-			Krom.sysCommand('$copycmd ' + asset.path + ' $path');
+			Os.sysCommand('$copycmd ' + asset.path + ' $path');
 		}
 	}
 
 	public static function exportScene(path:String = "") {
 		var newPath = path;
 		if(path!="") newPath = path+"/";
-		Krom.fileSaveBytes(newPath+App.scene.name+".json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.scene)).getData());
+		Os.fileSaveBytes(newPath+App.scene.name+".json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.scene)).getData());
 	}
 
 	public static function exportWindow(path:String = "") {
 		var newPath = path;
 		if(path!="") newPath = path+"/";
-		Krom.fileSaveBytes(newPath+"window.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.window)).getData());
+		Os.fileSaveBytes(newPath+"window.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.window)).getData());
 	}
 
 	public static function exportNodes(path:String = "") {
@@ -57,16 +57,16 @@ class Export{
 		if(path!="") newPath = path+"/";
 		for(nodes in UINodes.nodesArray){
 			var name = nodes.name;
-			Krom.fileSaveBytes(newPath+'$name.json', haxe.io.Bytes.ofString(haxe.Json.stringify(nodes.nodeCanvas)).getData());
+			Os.fileSaveBytes(newPath+'$name.json', haxe.io.Bytes.ofString(haxe.Json.stringify(nodes.nodeCanvas)).getData());
 		}
 	}
 
 	public static function exportJsonFile(name:String, data:Dynamic) {
-		Krom.fileSaveBytes(name, haxe.io.Bytes.ofString(haxe.Json.stringify(data)).getData());
+		Os.fileSaveBytes(name, haxe.io.Bytes.ofString(haxe.Json.stringify(data)).getData());
 	}
 
 	public static function exportFile(name:String, data:String) {
-		Krom.fileSaveBytes(name, haxe.io.Bytes.ofString(data).getData());
+		Os.fileSaveBytes(name, haxe.io.Bytes.ofString(data).getData());
 	}
 
 	static function adjustAssetsPath(newPath:String){

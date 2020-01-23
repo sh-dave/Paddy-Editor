@@ -7,7 +7,6 @@ typedef PaddyData = {
 	var name: String;
 	var window: String;
 	var scene: String;
-	var ?theme: zui.Themes.TTheme;
 }
 
 class Paddy {

@@ -1,6 +1,7 @@
 package paddy.files;
 
 // Zui
+import paddy.ui.UIProperties;
 import zui.Nodes;
 
 // Editor
@@ -13,15 +14,19 @@ class Imports {
 			if(!StringTools.endsWith(path, "paddy.json")) return;
 			var parsed: paddy.Paddy.PaddyData = haxe.Json.parse(blob.toString());
 			App.paddydata = parsed;
-			App.paddydata.name = parsed.name;
-			App.paddydata.scene = parsed.scene;
-			App.paddydata.window = parsed.window;
 			App.projectPath = path.substring(0, path.length - 10);
 			App.assetHandle.text = path.substring(0, path.length - 10);
 			importWindow(parsed.window);
 			importScene(parsed.scene);
 			paddy.Paddy.reloadUI();
 		});
+	}
+	
+	public static function importConfig() {
+		var parsed: paddy.data.Data.ConfigData = haxe.Json.parse(kha.Assets.blobs._config_json.toString());
+		App.configData = parsed;
+		if(App.configData.plugins != null) importPlugins(App.configData.plugins);
+		paddy.ui.UIProperties.reScaleUI(App.configData.uiScale);
 	}
 
 
@@ -60,5 +65,9 @@ class Imports {
 		for(path in paths){
 			if(path.type == Image) Assets.loadAssetFromPath(App.projectPath + path.path, Image);
 		}
+	}
+
+	static function importPlugins(names:Array<String>) {
+		for(name in names) Plugin.enable(name);
 	}
 }

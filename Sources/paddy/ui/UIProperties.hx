@@ -10,6 +10,9 @@ import paddy.data.Data.ObjectData;
 @:access(zui.Zui)
 class UIProperties {
 
+	static var propUI:Zui=null;
+	static var uimodal:Zui= null;
+
 	public static var propsW = 200;
 	public static var propsH = 600;
 
@@ -27,7 +30,9 @@ class UIProperties {
 
 	public static var nodeSlots = [];
 
-	public static function render(ui:Zui) {
+	public static function render(ui:Zui, uiModal:Zui) {
+		propUI = ui;
+		uimodal = uiModal;
 		var window = App.window;
 
 		var selectedObj = App.selectedObj;
@@ -138,6 +143,9 @@ class UIProperties {
 							paddy.Paddy.changeTheme(ui, tthemes[mode.position]);
 							paddy.Paddy.reloadUI();
 						}
+						var scaleHandle = Id.handle({value: App.configData.uiScale});
+						App.configData.uiScale = ui.slider(scaleHandle, "Scale", 0.9, 2.0, true); 
+						if(scaleHandle.changed) reScaleUI(App.configData.uiScale);
 					ui.unindent();
 				}
 				if(ui.panel(propPanelGridH, "Grid")){
@@ -163,8 +171,7 @@ class UIProperties {
 			if(ui.tab(propTabHandle, "Plugins")){
 				ui.row([3/5, 2/5]);
 				var file = ui.textInput(Id.handle(), "Name");
-				if(ui.button("Import") && file != ""){
-					if(Plugin.plugins.exists(file)) return;
+				if(ui.button("Import") && file != "" && !Plugin.plugins.exists(file)){
 					Plugin.enable(file);
 				}
 				for(name => value in Plugin.plugins){
@@ -178,5 +185,11 @@ class UIProperties {
 			for (value in paddy.Plugin.plugins) if (value.propWinUI != null) value.propWinUI(ui);
 		}
 
+	}
+
+	public static function reScaleUI(factor:Float) {
+		propUI.setScale(factor);
+		uimodal.setScale(factor);
+		Paddy.reloadUI();
 	}
 }

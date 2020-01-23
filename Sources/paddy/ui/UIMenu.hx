@@ -41,11 +41,9 @@ class UIMenu {
 
 		ui.begin(g);
 		if (ui.window(Id.handle(), 3, 5, menuWidth, 25)) {
-			ui.row([1/10, 1/10]);
-			if (ui.button("File")) {
-				menu = File;
-			}
-			// ui.button("Editor");
+			ui.row([1/10, 1/10, 1/10]);
+			if (ui.button("File")) menu = File;
+			if (ui.button("Editor")) menu = Editor;
 		}
 		if(ui.inputStarted) menu == null;
 		ui.end(false);
@@ -63,7 +61,7 @@ class UIMenu {
 
 			if (ui.button("New")) {
 				if(App.projectPath!="") App.projectPath = "";
-				App.paddydata = { name: "", window: "", scene: "" }
+				App.paddydata = { name: "", window: "", scene: ""}
 				App.scene = { name: "scene", objects: [], assets: []}
 				App.window = { name: "Window", width: 1440, height: 900, windowMode: 0, clearColor: [0, 0, 0, 255] }
 			}
@@ -84,6 +82,22 @@ class UIMenu {
 					}
 				}
 			}
+
+			ui.endRegion(false);
+		}
+		if(menu == Editor){
+			g.begin(false);
+
+			g.color = 0xff202020;
+			g.fillRect(63, 30, 120, 100);
+			outx = 63; outy = 30; outw = 120; outh = 100;
+
+			g.end();
+
+			ui.beginRegion(g, 65, 32, 116);
+
+			if (ui.button("Refresh UI")) paddy.Paddy.reloadUI();
+			if (ui.button("Export Config")) Export.exportConfig();
 
 			ui.endRegion(false);
 		}

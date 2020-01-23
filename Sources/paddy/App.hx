@@ -21,6 +21,7 @@ import paddy.ui.UIProperties;
 @:access(zui.Zui)
 class App {
 
+	public static var version = "2020.1.0";
 	var ui:Zui;
 	var uimodal:Zui;
 	var objects:Array<String> = [];
@@ -59,6 +60,11 @@ class App {
 
 	public static var assetsWinH = Id.handle();
 	public static var selectedObj:ObjectData = null;
+
+	public static var configData: ConfigData = {
+		plugins: [],
+		uiScale: 1.0
+	}
 
 	public static var paddydata: paddy.Paddy.PaddyData = {
 		name: "",
@@ -207,7 +213,7 @@ class App {
 
 		UIEditor.render(ui);
 
-		UIProperties.render(ui);
+		UIProperties.render(ui, uimodal);
 
 		if(ui.window(assetsWinH, 0, UIOutliner.outlinerH, fileW, kha.System.windowHeight()-UIOutliner.outlinerH)){
 			if(ui.tab(Id.handle(), "File Browser")){

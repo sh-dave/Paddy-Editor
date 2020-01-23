@@ -33,10 +33,10 @@ class Export{
 		App.projectPath = path;
 		paddy.Paddy.reloadUI();
 	}
-	
+
 	public static function exportConfig() {
 		App.configData.plugins = Plugin.getNames();
-		Krom.fileSaveBytes(Krom.getFilesLocation()+"/_config.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.configData)).getData());
+		Os.fileSaveBytes(Os.getFilesLocation()+"/_config.json", haxe.io.Bytes.ofString(haxe.Json.stringify(App.configData)).getData());
 	}
 
 	public static function copyAssets(path:String) {
